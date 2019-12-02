@@ -5,10 +5,35 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.hardware.Camera;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,5 +88,47 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.CAMERA},
                 PERMISSION_REQUEST_CODE);
     }
+
+
+
+    private class AsyncTaskDATA extends AsyncTask {
+
+        private Activity activity = null;
+
+        public AsyncTaskDATA(Activity mainActivity){
+            this.activity = mainActivity;
+        }
+        @SuppressLint("WrongThread")
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            statusNetwork = this.isOnline() ;
+            Log.e("network state", Boolean.toString(statusNetwork) );
+
+            return null;
+        }
+
+
+        public boolean isOnline() {
+            boolean connected = false;
+            try {
+                ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                connected = networkInfo != null && networkInfo.isAvailable() &&
+                        networkInfo.isConnected();
+                return connected;
+
+
+            } catch (Exception e) {
+                System.out.println("CheckConnectivity Exception: " + e.getMessage());
+                Log.v("connectivity", e.toString());
+            }
+            return connected;
+        }
+    }
+
+
+
 
 }
