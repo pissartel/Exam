@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (checkPermission()) {
+            Toast.makeText(getApplicationContext(), "Mode Hors Ligne", Toast.LENGTH_LONG).show();
+
             //main logic or main code
 
             // . write your main code to execute, It will execute if the permission is already given.
