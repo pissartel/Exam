@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private LiFiSdkManager liFiSdkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             requestPermission();
         }
+
+
 
 
 
